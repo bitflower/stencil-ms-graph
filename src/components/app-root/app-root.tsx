@@ -23,9 +23,10 @@ export class AppRoot {
 
   async handleLogin() {
     console.log('handleLogin');
-    await getLogin();
-
     const graphScopes = ['User.Read', 'Mail.Send']; // An array of graph scopes
+
+    await getLogin(graphScopes);
+
     getAuthProvider(msalInstance, graphScopes);
     console.log('AuthProvider', authProvider);
 

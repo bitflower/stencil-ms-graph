@@ -2,7 +2,7 @@ import * as Msal from 'msal';
 
 import { msalInstance } from './msal-instance';
 
-export const getLogin: Function = async () => {
+export const getLogin: Function = async scopes => {
   console.log('getLogin');
 
   //   msalInstance.acquireTokenPopup(authPars).then(
@@ -73,7 +73,7 @@ export const getLogin: Function = async () => {
   //   console.log(userAgentApplication);
 
   const authPars: Msal.AuthenticationParameters = {
-    scopes: ['User.Read'] //, 'Mail.Read']
+    scopes: scopes
     // sid: '8abbcccf-512f-44ba-9c9b-a415cb267110'
   }; // ['User.Read', 'Mail.Read'];
   //   msalInstance.acquireTokenPopup(authPars).then(
