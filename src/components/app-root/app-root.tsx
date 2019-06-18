@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, State } from '@stencil/core';
 
 // import * as GraphTypes from "@microsoft/microsoft-graph-types"
 import { getLogin, getMsalInstance, msalInstance } from '../../auth';
@@ -11,6 +11,9 @@ import { getGraphClient } from '../../graph/client';
   shadow: true
 })
 export class AppRoot {
+  @State()
+  private graphClient;
+
   componentWillLoad() {
     // It's required to do this here: https://github.com/AzureAD/microsoft-authentication-library-for-js/issues/174
     getMsalInstance();
@@ -18,20 +21,34 @@ export class AppRoot {
 
   async handleLogin() {
     console.log('handleLogin');
-    const graphScopes = ['User.Read']; //, 'mail.send']; // An array of graph scopes
+    const graphScopes = ['User.Read', 'Files.Read.All', 'Directory.Read.All']; //, 'mail.send']; // An array of graph scopes
 
     await getLogin(graphScopes);
 
     getAuthProvider(msalInstance, graphScopes);
     console.log('AuthProvider', authProvider);
 
-    const graphClient = getGraphClient();
-    console.log('graphClient', graphClient);
+    this.graphClient = getGraphClient();
+    console.log('graphClient', this.graphClient);
+  }
+
+  async readFolders() {
+    console.log('readFolders');
+
+    // try {
+    //   console.log('Reading user');
+    //   let userDetails = await graphClient.api('/me').get();
+    //   console.log(userDetails);
+    // } catch (error) {
+    //   throw error;
+    // }
 
     try {
-      console.log('Reading user');
-      let userDetails = await graphClient.api('/me').get();
-      console.log(userDetails);
+      let res = await this.graphClient
+        .api(`/me/drive/root`)
+        // .responseType(MicrosoftGraph.ResponseType.BLOB)
+        .get();
+      console.log(res);
     } catch (error) {
       throw error;
     }
@@ -53,6 +70,9 @@ export class AppRoot {
           </stencil-router>
 
           <button onClick={() => this.handleLogin()}>Login</button>
+          {this.graphClient ? (
+            <button onClick={() => this.readFolders()}>Read Folders</button>
+          ) : null}
         </main>
       </div>
     );
