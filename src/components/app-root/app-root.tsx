@@ -85,7 +85,6 @@ export class AppRoot {
     const pdfUrl: string = `/me/drive/items/${
       this.rootFolders[0].id
     }/content?format=${format}`;
-
     console.log('pdfUrl', pdfUrl);
 
     // console.log(`COPY https://graph.microsoft.com/v1.0/${pdfUrl}`);

@@ -6,8 +6,8 @@ export const getMsalInstance = () => {
   console.log('getMsalInstance');
   var msalConfig: Msal.Configuration = {
     auth: {
-      clientId: '8abbcccf-512f-44ba-9c9b-a415cb267110'
-      //   redirectUri: location.origin
+      clientId: '8abbcccf-512f-44ba-9c9b-a415cb267110',
+      redirectUri: location.origin
     },
     cache: {
       cacheLocation: 'localStorage',
