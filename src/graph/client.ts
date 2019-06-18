@@ -6,11 +6,13 @@ import { ClientOptions } from '@microsoft/microsoft-graph-client/lib/es/IClientO
 
 let graphClient: EsClient.Client;
 
-export const getGraphCLient = (): EsClient.Client => {
+export const getGraphClient = (): EsClient.Client => {
   console.log('getGraphCLient');
 
   const options: ClientOptions = {
-    authProvider
+    authProvider,
+    debugLogging: true
+    // defaultVersion: 'v2.0'
   };
   //   const Client = Client.Client;
   graphClient = EsClient.Client.initWithMiddleware(options);
