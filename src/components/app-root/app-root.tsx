@@ -62,7 +62,7 @@ export class AppRoot {
     return (
       <div>
         <header>
-          <h1>Stencil App Starter</h1>
+          <h1>Dr. Hartmann Tagebücher Portal</h1>
         </header>
 
         <main>
@@ -76,7 +76,9 @@ export class AppRoot {
           <div class="padding">
             <button onClick={() => this.handleLogin()}>Login</button>
             {this.graphClient ? (
-              <button onClick={() => this.readFolders()}>Read Folders</button>
+              <button onClick={() => this.readFolders()}>
+                Verzeichnisse lesen
+              </button>
             ) : null}
 
             <h2>Gefundene Ordner</h2>
