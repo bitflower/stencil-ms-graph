@@ -3,7 +3,7 @@
 }
 
 header {
-  background: #5851ff;
+  background: #3d5f92;
   color: white;
   height: 56px;
   display: flex;
@@ -19,7 +19,7 @@ h1 {
 }
 
 button {
-  background: #5851ff;
+  background: #3d5f92;
   color: white;
   margin: 8px;
   border: none;
