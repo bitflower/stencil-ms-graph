@@ -4,7 +4,8 @@ import { Component, h } from '@stencil/core';
 
 import { getLogin } from '../../auth';
 
-import { getMsalInstance } from '../../auth';
+import { getMsalInstance, msalInstance } from '../../auth';
+import { getAuthProvider, authProvider } from '../../graph';
 
 @Component({
   tag: 'app-root',
@@ -17,9 +18,14 @@ export class AppRoot {
     getMsalInstance();
   }
 
-  handleLogin() {
+  async handleLogin() {
     console.log('handleLogin');
-    getLogin();
+    await getLogin();
+
+    const graphScopes = ['user.read', 'mail.send']; // An array of graph scopes
+    getAuthProvider(msalInstance, graphScopes);
+
+    console.log('AuthProvider', authProvider);
   }
 
   render() {

@@ -140,6 +140,8 @@ export const getLogin: Function = async () => {
   //       }
   //     }
   //   );
+
+  return token;
 };
 
 // if (!this.userAgentApplication) {
