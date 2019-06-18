@@ -48,7 +48,10 @@ export class AppRoot {
 
     try {
       let res = await this.graphClient
-        .api(`/me/drive/root/children`)
+        // .api(`/me/drive/root:/Kunden:/children`)
+        .api(
+          `/me/drive/root:/Kunden/99997%20Belliconias%20AG%20Deutschland/Berlin%20Zentrale/VDKA%201:/children`
+        )
         // .responseType(MicrosoftGraph.ResponseType.BLOB)
         .get();
       console.log(res);
@@ -84,7 +87,15 @@ export class AppRoot {
             <h2>Gefundene Ordner</h2>
             <ul>
               {this.rootFolders
-                ? this.rootFolders.map((folder: any) => <li>{folder.name}</li>)
+                ? this.rootFolders.map((folder: any) => (
+                    <li>
+                      <a href={folder.webUrl} target="_blank">
+                        {folder.name}
+                      </a>
+                      <br />
+                      (Pfad: <i>{folder.parentReference.path}</i>)
+                    </li>
+                  ))
                 : null}
             </ul>
           </div>
