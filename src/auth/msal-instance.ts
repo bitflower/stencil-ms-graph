@@ -1,6 +1,6 @@
 import * as Msal from 'msal';
 
-export let msalInstance;
+export let msalInstance: Msal.UserAgentApplication;
 
 export const getMsalInstance = () => {
   console.log('getMsalInstance');
