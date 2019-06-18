@@ -76,18 +76,17 @@ export class AppRoot {
     //   );
     // });
 
-    printJS({
-      printable: this.rootFolders[0][`@microsoft.graph.downloadUrl`],
-      type: 'json'
-    });
+    // printJS({
+    //   printable: this.rootFolders[0][`@microsoft.graph.downloadUrl`],
+    //   type: 'json'
+    // });
 
-    // const format: string = 'pdf';
+    const format: string = 'pdf';
+    const pdfUrl: string = `/me/drive/items/${
+      this.rootFolders[0].id
+    }/content?format=${format}`;
 
-    // const pdfUrl: string = `/me/drive/items/${
-    //   this.rootFolders[0].id
-    // }/content?format=${format}`;
-
-    // console.log('pdfUrl', pdfUrl);
+    console.log('pdfUrl', pdfUrl);
 
     // console.log(`COPY https://graph.microsoft.com/v1.0/${pdfUrl}`);
 
@@ -113,17 +112,17 @@ export class AppRoot {
     //   console.log('ERR', err);
     // }
 
-    // try {
-    //   let res = await this.graphClient.api(pdfUrl).get();
+    try {
+      let res = await this.graphClient.api(pdfUrl).get();
 
-    //   console.log('BLUB', res);
+      console.log('BLUB', res);
 
-    //   // this.rootFolders = res.value;
-    // } catch (error) {
-    //   // Extract PDF URL
-    //   console.log('GOT IT!', error);
-    //   throw error;
-    // }
+      // this.rootFolders = res.value;
+    } catch (error) {
+      // Extract PDF URL
+      console.log('GOT IT!', error);
+      throw error;
+    }
   }
 
   protected filesToPrint: string[] = [];
@@ -185,6 +184,10 @@ export class AppRoot {
                     <li>
                       <a href={folder.webUrl} target="_blank">
                         {folder.name}
+                      </a>{' '}
+                      |{' '}
+                      <a href={folder[`@microsoft.graph.downloadUrl`]}>
+                        Download
                       </a>
                       <br />
                       (Pfad: <i>{folder.parentReference.path}</i>)
