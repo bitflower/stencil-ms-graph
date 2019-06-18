@@ -1,3 +1,7 @@
+.padding {
+  padding: 0 10px;
+}
+
 header {
   background: #5851ff;
   color: white;

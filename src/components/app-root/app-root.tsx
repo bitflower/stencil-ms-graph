@@ -14,6 +14,9 @@ export class AppRoot {
   @State()
   private graphClient;
 
+  @State()
+  public rootFolders: any[];
+
   componentWillLoad() {
     // It's required to do this here: https://github.com/AzureAD/microsoft-authentication-library-for-js/issues/174
     getMsalInstance();
@@ -45,10 +48,11 @@ export class AppRoot {
 
     try {
       let res = await this.graphClient
-        .api(`/me/drive/root`)
+        .api(`/me/drive/root/children`)
         // .responseType(MicrosoftGraph.ResponseType.BLOB)
         .get();
       console.log(res);
+      this.rootFolders = res.value;
     } catch (error) {
       throw error;
     }
@@ -69,10 +73,19 @@ export class AppRoot {
             </stencil-route-switch>
           </stencil-router>
 
-          <button onClick={() => this.handleLogin()}>Login</button>
-          {this.graphClient ? (
-            <button onClick={() => this.readFolders()}>Read Folders</button>
-          ) : null}
+          <div class="padding">
+            <button onClick={() => this.handleLogin()}>Login</button>
+            {this.graphClient ? (
+              <button onClick={() => this.readFolders()}>Read Folders</button>
+            ) : null}
+
+            <h2>Gefundene Ordner</h2>
+            <ul>
+              {this.rootFolders
+                ? this.rootFolders.map((folder: any) => <li>{folder.name}</li>)
+                : null}
+            </ul>
+          </div>
         </main>
       </div>
     );
