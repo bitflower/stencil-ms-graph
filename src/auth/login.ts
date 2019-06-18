@@ -5,8 +5,6 @@ import { msalInstance } from './msal-instance';
 export const getLogin: Function = async () => {
   console.log('getLogin');
 
-  //   const msalInstance = getMsalInstance();
-
   //   msalInstance.acquireTokenPopup(authPars).then(
   //     (token: Msal.AuthResponse) => {
   //       console.log('logined', token);
