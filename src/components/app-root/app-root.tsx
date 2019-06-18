@@ -1,7 +1,7 @@
 import { Component, h, State } from '@stencil/core';
 import * as EsClient from '@microsoft/microsoft-graph-client/lib/es/Client';
 
-// import printJS from 'print-js';
+import printJS from 'print-js';
 
 // import * as GraphTypes from "@microsoft/microsoft-graph-types"
 import { getLogin, getMsalInstance, msalInstance } from '../../auth';
@@ -65,6 +65,7 @@ export class AppRoot {
       throw error;
     }
   }
+
   async printFiles() {
     console.log('printFiles');
 
@@ -75,16 +76,22 @@ export class AppRoot {
     //   );
     // });
 
-    const format: string = 'pdf';
+    printJS({
+      printable: this.rootFolders[0][`@microsoft.graph.downloadUrl`],
+      type: 'json'
+    });
 
-    const pdfUrl: string = `/me/drive/items/${
-      this.rootFolders[0].id
-    }/content?format=${format}`;
+    // const format: string = 'pdf';
 
-    console.log('pdfUrl', pdfUrl);
+    // const pdfUrl: string = `/me/drive/items/${
+    //   this.rootFolders[0].id
+    // }/content?format=${format}`;
 
-    console.log(`COPY https://graph.microsoft.com/v1.0/${pdfUrl}`);
+    // console.log('pdfUrl', pdfUrl);
 
+    // console.log(`COPY https://graph.microsoft.com/v1.0/${pdfUrl}`);
+
+    // DOESN'T WORK !!
     // console.log('TOKEN', window.localStorage.getItem('msal.idtoken'));
     // const root: string = 'https://graph.microsoft.com/v1.0/';
     // try {
@@ -106,17 +113,46 @@ export class AppRoot {
     //   console.log('ERR', err);
     // }
 
-    try {
-      let res = await this.graphClient.api(pdfUrl).get();
+    // try {
+    //   let res = await this.graphClient.api(pdfUrl).get();
 
-      console.log('BLUB', res);
+    //   console.log('BLUB', res);
 
-      // this.rootFolders = res.value;
-    } catch (error) {
-      // Extract PDF URL
-      console.log('GOT IT!', error);
-      throw error;
+    //   // this.rootFolders = res.value;
+    // } catch (error) {
+    //   // Extract PDF URL
+    //   console.log('GOT IT!', error);
+    //   throw error;
+    // }
+  }
+
+  protected filesToPrint: string[] = [];
+  async printSamplePDF() {
+    console.log('printSamplePDF');
+
+    const pdfFile: string = 'https://printjs.crabbly.com/docs/printjs.pdf';
+
+    this.filesToPrint = [pdfFile, pdfFile];
+
+    this.printNextFile();
+  }
+
+  private printNextFile() {
+    console.log('File printed');
+
+    if (this.filesToPrint.length > 0) {
+      printJS({
+        printable: this.filesToPrint[0],
+        // type: 'pdf',
+        // showModal: true,
+        // modalMessage: 'Retrieving document from external server...',
+        onPrintDialogClose: this.printNextFile.bind(this)
+      });
     }
+
+    this.filesToPrint.splice(0, 1);
+
+    console.log('count', this.filesToPrint);
   }
 
   render() {
@@ -159,6 +195,9 @@ export class AppRoot {
             {this.rootFolders ? (
               <button onClick={() => this.printFiles()}>Dateien drucken</button>
             ) : null}
+            <button onClick={() => this.printSamplePDF()}>
+              2 Beispiel PDFs drucken
+            </button>
           </div>
         </main>
       </div>
