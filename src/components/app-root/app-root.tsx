@@ -1,11 +1,14 @@
 import { Component, h } from '@stencil/core';
 
+// import * as GraphTypes from "@microsoft/microsoft-graph-types"
+
 // import { Client } from "@microsoft/microsoft-graph-client";
 
 import { getLogin } from '../../auth';
 
 import { getMsalInstance, msalInstance } from '../../auth';
 import { getAuthProvider, authProvider } from '../../graph';
+import { getGraphCLient } from '../../graph/client';
 
 @Component({
   tag: 'app-root',
@@ -22,10 +25,19 @@ export class AppRoot {
     console.log('handleLogin');
     await getLogin();
 
-    const graphScopes = ['user.read', 'mail.send']; // An array of graph scopes
+    const graphScopes = ['User.Read', 'Mail.Send']; // An array of graph scopes
     getAuthProvider(msalInstance, graphScopes);
-
     console.log('AuthProvider', authProvider);
+
+    const graphClient = getGraphCLient();
+    console.log('graphClient', graphClient);
+
+    try {
+      let userDetails = await graphClient.api('/me').get();
+      console.log(userDetails);
+    } catch (error) {
+      throw error;
+    }
   }
 
   render() {
