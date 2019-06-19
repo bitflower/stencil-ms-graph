@@ -1,5 +1,5 @@
 import { Component, h, State } from '@stencil/core';
-import * as EsClient from '@microsoft/microsoft-graph-client/lib/es/Client';
+import { Client } from '@microsoft/microsoft-graph-client/lib/src/Client';
 
 import printJS from 'print-js';
 
@@ -15,7 +15,7 @@ import { getGraphClient } from '../../graph/client';
 })
 export class AppRoot {
   @State()
-  private graphClient: EsClient.Client;
+  private graphClient: Client;
 
   @State()
   public rootFolders: any[];
