@@ -189,7 +189,11 @@ export class AppRoot {
                         Download
                       </a>
                       <br />
-                      (Pfad: <i>{folder.parentReference.path}</i>)
+                      (Pfad:{' '}
+                      <i>
+                        {folder.parentReference.path.split('%20').join(' ')}
+                      </i>
+                      )
                     </li>
                   ))
                 : null}
