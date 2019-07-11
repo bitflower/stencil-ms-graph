@@ -10,11 +10,11 @@
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {
-    "@microsoft/microsoft-graph-client": "^2.0.0-Preview.1",
+    "@microsoft/microsoft-graph-client": "^2.0.0-Preview.4",
     "@stencil/core": "^1.0.6",
     "@stencil/router": "^1.0.1",
     "es6-promise": "^4.2.8",
-    "msal": "^1.0.1",
+    "msal": "^1.0.2",
     "print-js": "^1.0.61"
   },
   "license": "MIT",
