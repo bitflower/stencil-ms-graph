@@ -112,7 +112,7 @@ export class AppRoot {
     // }
 
     try {
-      let res = await this.graphClient.api(pdfUrl).get();
+      let res = await this.graphClient.api(pdfUrl)..option('redirect', 'follow').get();
 
       console.log('BLUB', res);
 
