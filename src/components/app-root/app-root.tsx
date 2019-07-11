@@ -87,32 +87,11 @@ export class AppRoot {
     }/content?format=${format}`;
     console.log('pdfUrl', pdfUrl);
 
-    // console.log(`COPY https://graph.microsoft.com/v1.0/${pdfUrl}`);
-
-    // DOESN'T WORK !!
-    // console.log('TOKEN', window.localStorage.getItem('msal.idtoken'));
-    // const root: string = 'https://graph.microsoft.com/v1.0/';
-    // try {
-    //   const pdfFile: any = await fetch(`${root}${pdfUrl}`, {
-    //     headers: new Headers({
-    //       Authorization:
-    //         'Bearer ' + window.localStorage.getItem('msal.idtoken'),
-    //       'client-request-id': '2f6d9c90-b3fd-4e60-0861-c08374aae393',
-    //       Origin: 'http://localhost:3333',
-    //       Referer: 'http://localhost:3333/',
-    //       SdkVersion: 'graph-js/1.7.0 (featureUsage=6)',
-    //       'User-Agent':
-    //         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
-    //       // 'Access-Control-Allow-Origin': '*'
-    //     })
-    //   });
-    //   console.log('pdfFile', pdfFile);
-    // } catch (err) {
-    //   console.log('ERR', err);
-    // }
-
     try {
-      let res = await this.graphClient.api(pdfUrl).option('redirect', 'follow').get();
+      let res = await this.graphClient
+        .api(pdfUrl)
+        .option('redirect', 'follow')
+        .get();
 
       console.log('BLUB', res);
 
